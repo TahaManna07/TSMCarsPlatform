@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page web simple avec une base de données</title>
+</head>
+<body>
+  <h1>Inscription</h1>
+  <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $name = $_POST['name'];
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+
+      $conn = mysqli_connect('localhost', 'username', 'password', 'example_db');
+
+      $sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
+
+      if (mysqli_query($conn, $sql)) {
+        echo 'Inscription réussie.';
+      } else {
+        echo 'Erreur : ' . mysqli_error($conn);
+      }
+
+      mysqli_close($conn);
+    }
+  ?>
+  <form method="POST" action="">
+    <label for="name">Nom :</label>
+    <input type="text" name="name" id="name"><br><br>
+
+    <label for="email">E-mail :</label>
+    <input type="email" name="email" id="email"><br><br>
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" name="password" id="password"><br><br>
+
+    <input type="submit" value="Inscription">
+  </form>
+</body>
+</html>
